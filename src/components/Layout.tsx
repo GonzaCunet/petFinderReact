@@ -1,11 +1,10 @@
 import { Outlet } from "react-router-dom";
-
+import { Header } from "./header/Header";
 export function Layout() {
   return (
-    <>
-      <header>soy header</header>
+    <div className="layout">
+      <Header />
       <Outlet />
-      <footer>soy footer</footer>
-    </>
+    </div>
   );
 }
