@@ -2,7 +2,7 @@ import css from "./index.module.css";
 import homephoto from "../../assets/homephoto.svg";
 import { ButtonEl } from "../../Ui/button/button";
 import { useNavigate } from "react-router";
-import { usePetsNears } from "../../atoms/state";
+import { usePetsNears } from "../../atoms/petState";
 
 export function Home() {
   const navigate = useNavigate();
@@ -18,9 +18,11 @@ export function Home() {
         petsNear.fetchPetsNear(latitude, longitude).then(() => {
           navigate("/home-mascotas");
         });
-        console.log(latitude, longitude);
       });
     }
+  };
+  const handleButtonLogIn = () => {
+    navigate("/login");
   };
   return (
     <div className={css.mainhome}>
@@ -33,6 +35,9 @@ export function Home() {
       </h2>
       <ButtonEl handleClick={handleButtonLocalitation}>
         Dar mi ubicación actual
+      </ButtonEl>
+      <ButtonEl handleClick={handleButtonLogIn} buttonColor={"#00A884"}>
+        Iniciar sesión
       </ButtonEl>
     </div>
   );

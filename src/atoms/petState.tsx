@@ -1,9 +1,14 @@
 import { create } from "zustand";
 
 const apiBaseUrl = "http://localhost:3000";
-
+interface Pet {
+  id: string;
+  name: string;
+  lastLocation: string;
+  photoURL: string;
+}
 interface PetsNear {
-  pets: [];
+  pets: Pet[];
   loading: boolean;
   error: string | null;
   fetchPetsNear: (last_lat: any, last_lng: any) => Promise<void>;
@@ -32,7 +37,6 @@ export const usePetsNears = create<PetsNear>((set) => ({
       );
       if (!response.ok) throw new Error("Failed to fetch users");
       const data = await response.json();
-      console.log(data);
 
       set({ pets: data, loading: false });
     } catch (error: any) {
