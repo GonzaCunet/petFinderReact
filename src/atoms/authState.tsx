@@ -4,12 +4,17 @@ const API_BASE_URL = "http://localhost:3000";
 interface AuthState {
   token: string | null;
   error: string | null;
+  email: string | null;
+  isLoading: boolean;
   logIn: (email: string, password: string) => Promise<void>;
+  setEmail: (email: string) => void;
 }
 
 export const useAuthState = create<AuthState>((set) => ({
   token: null,
   error: null,
+  email: null,
+  isLoading: true,
   logIn: async (email, password) => {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/token`, {
@@ -17,7 +22,6 @@ export const useAuthState = create<AuthState>((set) => ({
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      console.log("entre al try");
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -25,16 +29,10 @@ export const useAuthState = create<AuthState>((set) => ({
       }
 
       const data = await response.json();
-      set({ token: data.token, error: null }); // Guarda el token en el estado global
+      set({ token: data.token, error: null, email, isLoading: false });
     } catch (error: any) {
-      set({ token: null, error: error.message }); // Maneja errores
+      set({ token: null, error: error.message, isLoading: false });
     }
   },
+  setEmail: (email) => set({ email }),
 }));
-
-// async logIn(email, password) {
-//     return fetch(API_BASE_URL + "/auth/token", {
-//       method: "POST",
-//       headers: { "Content-type": "application/json" },
-//       body: JSON.stringify({ email, password }),
-//     })

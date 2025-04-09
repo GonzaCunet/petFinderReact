@@ -16,7 +16,7 @@
 .labeltext {
   margin: 0;
 }
-.iniciartittle {
+.iniciartitle {
   font-family: "Poppins", sans-serif;
   font-size: 30px;
 }
@@ -33,7 +33,7 @@
   height: 300px;
   width: 300px;
 }
-.input-ingresar {
+.inputingresar {
   border-radius: 10px;
   height: 50px;
   width: 335px;

@@ -3,10 +3,10 @@ import menu from "../../assets/menu.svg";
 import cruz from "../../assets/close.svg";
 import css from "./header.module.css";
 import { useState } from "react";
+import { useAuthState } from "../../atoms/authState";
 
 export function Header() {
-  const statetoken = "";
-  const statedatamail = "";
+  const { token, email } = useAuthState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleBurgerMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -25,15 +25,15 @@ export function Header() {
           src={cruz}
           onClick={handleBurgerMenu}
         />
-        <a className={css.burgertext} href="/signup">
+        <a className={css.burgertext} href="/login">
           {" "}
           Mis datos
         </a>
-        <a className={css.burgertext} href="/signup">
+        <a className={css.burgertext} href="/login">
           {" "}
           Mis mascotas reportadas
         </a>
-        <a className={css.burgertext} href="/signup">
+        <a className={css.burgertext} href="/login">
           {" "}
           Reportar mascota
         </a>
@@ -49,11 +49,20 @@ export function Header() {
           {" "}
           Reportar mascota
         </a> */}
-        /* no se tiene que mostrar si no estas con token logueado */
-        {statedatamail == ""
-          ? ``
-          : `<h2 class="burger-text">${statedatamail}</h2>
-                        <a class="cerrar-sesion">CERRAR SESIÓN</a> `}
+        {token == null ? null : (
+          <div>
+            <h2 className={css.burgertext}>{email}</h2>
+            <a
+              className={css.cerrarSesion}
+              onClick={() => {
+                localStorage.removeItem("token");
+              }}
+              href="/"
+            >
+              CERRAR SESIÓN
+            </a>
+          </div>
+        )}
       </div>
     </header>
   );
