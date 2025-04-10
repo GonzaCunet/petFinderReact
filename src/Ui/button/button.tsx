@@ -2,10 +2,11 @@ import css from "./button.module.css";
 type buttonProps = {
   buttonColor?: any;
   type?: any;
+  className?: any;
   children?: React.ReactNode;
   width?: string;
   height?: string;
-  handleClick?: () => void;
+  handleClick?: (e?: any) => void | Promise<void>;
 };
 export const ButtonEl = ({
   children,

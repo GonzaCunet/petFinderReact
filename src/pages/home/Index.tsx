@@ -6,15 +6,12 @@ import { usePetsNears } from "../../atoms/petState";
 
 export function Home() {
   const navigate = useNavigate();
-  // const fetchPetsNear = usePetsNears((state) => state.fetchPetsNear);
   const petsNear = usePetsNears();
   const handleButtonLocalitation = () => {
     if (navigator.geolocation) {
-      // Pedimos la ubicación actual
       navigator.geolocation.getCurrentPosition((position) => {
-        // Si se obtiene la ubicación, la mostramos
-        const latitude = position.coords.latitude; // Latitud
-        const longitude = position.coords.longitude; // Longitud
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
         petsNear.fetchPetsNear(latitude, longitude).then(() => {
           navigate("/home-mascotas");
         });
