@@ -1,4 +1,4 @@
-import classes from "./index.module.css";
+import css from "./index.module.css";
 import { useNavigate } from "react-router";
 import { CardEl } from "../../Ui/cardEl/CardEl";
 import { usePets } from "../../atoms/State";
@@ -12,7 +12,6 @@ export function ReportedPets() {
     showMyPetsCreated(); // Llama
     //  a la función para cargar las mascotas creadas
   }, []);
-  console.log("Estado de pets en el componente:", myPets);
 
   const handleEditPet = () => {
     // setPetEdit(id, photoURL);
@@ -21,8 +20,8 @@ export function ReportedPets() {
 
   return (
     <>
-      <div className="main-mis-mascotas">
-        <h1 className="tittle-mis-mascotas">Mis mascotas reportadas</h1>
+      <div className={css.mainmismascotas}>
+        <h1 className={css.titlemismascotas}>Mis mascotas reportadas</h1>
 
         {myPets.length === 0 ? (
           <h1>No tenes mascotas reportadas</h1>
@@ -35,6 +34,8 @@ export function ReportedPets() {
               name={pet.name}
               lastLocation={pet.lastLocation}
               onClick={() => handleEditPet()}
+              buttonColor={"#00BFFF"}
+              children={"Editar"}
             />
           ))
         )}
