@@ -5,7 +5,8 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
-import { useAuthState } from "../../atoms/authState";
+import { useAuthState } from "../../atoms/State";
+import { usePets } from "../../atoms/State";
 import { useNavigate } from "react-router-dom";
 
 mapboxgl.accessToken =
@@ -13,27 +14,27 @@ mapboxgl.accessToken =
 
 const initialReport = {
   name: "",
-  photo: "",
+  photoURL: "",
   lat: 0,
   lng: 0,
-  location: "",
+  lastLocation: "",
 };
 
-export const ReportPets = () => {
+export const ReportPet = () => {
   const navigate = useNavigate();
   const token = useAuthState((state) => state.token);
-  // const { fetchReportPet } = useReportPet();
+  const { fetchReportPet } = usePets();
   const mapContainerRef = useRef(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markerRef = useRef<mapboxgl.Marker | null>(null); // usar useRef para el marker
   const [resReport, setResReport] = useState(initialReport);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate("/login"); // o la ruta que tengas para login
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (!token) {
+      navigate("/login"); // o la ruta que tengas para login
+    }
+  }, [token]);
 
   useEffect(() => {
     if (!mapRef.current && mapContainerRef.current) {
@@ -72,7 +73,7 @@ export const ReportPets = () => {
     reader.onloadend = () => {
       const base64 = reader.result as string;
       setImagePreview(base64);
-      setResReport((prev) => ({ ...prev, photo: base64 }));
+      setResReport((prev) => ({ ...prev, photoURL: base64 }));
     };
 
     if (file) {
@@ -100,13 +101,13 @@ export const ReportPets = () => {
 
     if (data.features.length > 0) {
       const [lng, lat] = data.features[0].center;
-      const location = data.features[0].place_name;
+      const lastLocation = data.features[0].place_name;
 
       setResReport((prev) => ({
         ...prev,
         lat,
         lng,
-        location,
+        lastLocation,
       }));
 
       if (mapRef.current) {
@@ -131,9 +132,10 @@ export const ReportPets = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { name, photo, location, lat, lng } = resReport;
+    const { name, lat, lng, lastLocation, photoURL } = resReport;
+    console.log(resReport);
 
-    if (!name || !photo || !location) {
+    if (!name || !photoURL || !lastLocation) {
       Swal.fire({
         icon: "error",
         title: "Faltan datos",
@@ -141,15 +143,14 @@ export const ReportPets = () => {
       });
       return;
     }
-
     try {
-      // await fetchReportPet(name, photo, lat, lng, location);
-      console.log(name, photo, location, lat, lng);
+      await fetchReportPet(name, lat, lng, lastLocation, photoURL);
+      console.log(name, photoURL, location, lat, lng);
       Swal.fire({
         icon: "success",
         title: "Reporte enviado correctamente",
       }).then(() => {
-        navigate("/");
+        navigate("/reportedPets");
       });
     } catch (err) {
       Swal.fire({

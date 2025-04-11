@@ -1,9 +1,9 @@
 import classes from "./index.module.css";
-import { usePetsNears } from "../../atoms/petState";
+import { usePets } from "../../atoms/State";
 import { CardEl } from "../../Ui/cardEl/CardEl";
 
 export function HomeMascotas() {
-  const { pets } = usePetsNears();
+  const { pets } = usePets();
   return (
     <div className={classes.mainmascotas}>
       <h1 className={classes.titlemascotas}>Mascotas perdidas cerca</h1>

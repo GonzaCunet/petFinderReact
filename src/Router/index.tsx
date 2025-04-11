@@ -3,7 +3,10 @@ import { Layout } from "../components/Layout";
 import { Home } from "../pages/home/Index";
 import { Login } from "../pages/login/Index";
 import { HomeMascotas } from "../pages/homemascotas/Index";
-import { ReportPets } from "../pages/reportPets";
+import { ReportPet } from "../pages/reportPet/Index";
+import { ReportedPets } from "../pages/myReportedPets/Index";
+import { MisDatos } from "../pages/myProfile/Index";
+import { SignUp } from "../pages/signUp/Index";
 
 export function AppRoutes() {
   return (
@@ -12,7 +15,10 @@ export function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home-mascotas" element={<HomeMascotas />} />
-        <Route path="/reportpets" element={<ReportPets />} />
+        <Route path="/reportpet" element={<ReportPet />} />
+        <Route path="/reportedPets" element={<ReportedPets />} />
+        <Route path="/myprofile" element={<MisDatos />} />
+        <Route path="/signup" element={<SignUp />} />
       </Route>
     </Routes>
   );

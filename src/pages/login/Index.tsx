@@ -1,7 +1,7 @@
 import css from "./index.module.css";
 import { ButtonEl } from "../../Ui/button/button";
 import puertaimg from "../../assets/puertaimg.svg";
-import { useAuthState } from "../../atoms/authState";
+import { useAuthState } from "../../atoms/State";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 

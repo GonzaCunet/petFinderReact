@@ -2,11 +2,13 @@ import css from "./index.module.css";
 import homephoto from "../../assets/homephoto.svg";
 import { ButtonEl } from "../../Ui/button/button";
 import { useNavigate } from "react-router";
-import { usePetsNears } from "../../atoms/petState";
+import { usePets } from "../../atoms/State";
+import { useAuthState } from "../../atoms/State";
 
 export function Home() {
+  const { token } = useAuthState();
   const navigate = useNavigate();
-  const petsNear = usePetsNears();
+  const petsNear = usePets();
   const handleButtonLocalitation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -33,9 +35,11 @@ export function Home() {
       <ButtonEl handleClick={handleButtonLocalitation}>
         Dar mi ubicación actual
       </ButtonEl>
-      <ButtonEl handleClick={handleButtonLogIn} buttonColor={"#00A884"}>
-        Iniciar sesión
-      </ButtonEl>
+      {token == null ? (
+        <ButtonEl handleClick={handleButtonLogIn} buttonColor={"#00A884"}>
+          Iniciar sesión
+        </ButtonEl>
+      ) : null}
     </div>
   );
 }

@@ -1,16 +1,47 @@
 import mapslogo from "../../assets/mapslogo.svg";
 import menu from "../../assets/menu.svg";
 import cruz from "../../assets/close.svg";
-import css from "./header.module.css";
+import css from "./index.module.css";
 import { useState } from "react";
-import { useAuthState } from "../../atoms/authState";
+import { useAuthState } from "../../atoms/State";
+import { useNavigate } from "react-router";
 
 export function Header() {
-  const { token, email } = useAuthState();
+  const { token, email, logOut } = useAuthState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const handleBurgerMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const handleClickReport = () => {
+    if (token) {
+      navigate("/reportpet");
+      setIsMenuOpen(false);
+    } else {
+      navigate("/login");
+      setIsMenuOpen(false);
+    }
+  };
+  const handleClickMisDatos = () => {
+    if (token) {
+      navigate("/myprofile");
+      setIsMenuOpen(false);
+    } else {
+      navigate("/login");
+      setIsMenuOpen(false);
+    }
+  };
+
+  const handleClickMisMascotas = () => {
+    if (token) {
+      navigate("/reportedPets");
+      setIsMenuOpen(false);
+    } else {
+      navigate("/login");
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <header className={css.headerEl}>
       <img className={css.logoimagen} src={mapslogo} />
@@ -25,15 +56,15 @@ export function Header() {
           src={cruz}
           onClick={handleBurgerMenu}
         />
-        <a className={css.burgertext} href="/login">
+        <a className={css.burgertext} onClick={handleClickMisDatos}>
           {" "}
           Mis datos
         </a>
-        <a className={css.burgertext} href="/login">
+        <a className={css.burgertext} onClick={handleClickMisMascotas}>
           {" "}
           Mis mascotas reportadas
         </a>
-        <a className={css.burgertext} href="/login">
+        <a className={css.burgertext} onClick={handleClickReport}>
           {" "}
           Reportar mascota
         </a>
@@ -53,11 +84,11 @@ export function Header() {
           <div>
             <h2 className={css.burgertext}>{email}</h2>
             <a
-              className={css.cerrarSesion}
+              className={css.cerrarsesion}
               onClick={() => {
-                localStorage.removeItem("token");
+                logOut();
+                navigate("/");
               }}
-              href="/"
             >
               CERRAR SESIÓN
             </a>
