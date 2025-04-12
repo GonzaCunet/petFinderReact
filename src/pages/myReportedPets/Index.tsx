@@ -14,6 +14,7 @@ export function ReportedPets() {
   }, []);
 
   const handleEditPet = () => {
+    console.log("hola");
     // setPetEdit(id, photoURL);
     navigate("/editpets");
   };
@@ -33,9 +34,9 @@ export function ReportedPets() {
               photoURL={pet.photoURL}
               name={pet.name}
               lastLocation={pet.lastLocation}
-              onClick={() => handleEditPet()}
               buttonColor={"#00BFFF"}
               children={"Editar"}
+              handleClick={() => handleEditPet()}
             />
           ))
         )}

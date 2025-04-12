@@ -23,7 +23,7 @@ interface Pets {
     photoURL: any
   ) => Promise<void>;
   showMyPetsCreated: () => Promise<void>;
-  // setPetEdit: (id: string, photoURL: any) => void;
+  // sendMail:()
 }
 
 export const usePets = create<Pets>((set) => ({
@@ -50,6 +50,7 @@ export const usePets = create<Pets>((set) => ({
       );
       if (!response.ok) throw new Error("Failed to fetch users");
       const data = await response.json();
+      console.log(data);
 
       set({ pets: data, loading: false });
     } catch (error: any) {
@@ -98,12 +99,32 @@ export const usePets = create<Pets>((set) => ({
       }
 
       const data = await response.json();
-      console.log("Mascotas creadas:", data);
       set({ myPets: data });
     } catch (error: any) {
       set({ error: error.message });
     }
   },
+
+  // sendPetInfo: async (petId:string, petInfo:any) => {
+  //   try {
+  //     const response = await fetch(apiBaseUrl + "/sendmail", {
+  //       method: "POST",
+  //       headers: { "Content-type": "application/json" },
+  //       body: JSON.stringify({
+  //         petId: petId,
+  //         name: petInfo.name,
+  //         phone: petInfo.phone,
+  //         textarea: petInfo.textarea,
+  //       }),
+  //     });
+
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       throw new Error(errorData.message || "Error al enviar información");
+  //     }
+
+  //     return response.json();
+  //   }
 }));
 
 interface AuthState {

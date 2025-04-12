@@ -14,8 +14,13 @@ export const CardEl = (props: any) => {
           <h2 className={css.cardtext}>{props.lastLocation}</h2>
         </div>
         <div className={css.buttoncont}>
-          <ButtonEl buttonColor={props.buttonColor} width="120px" height="40px">
-            {props.children}
+          <ButtonEl
+            handleClick={props.handleClick}
+            buttonColor={props.buttonColor}
+            width="120px"
+            height="40px"
+          >
+            {props.buttonText}
           </ButtonEl>
         </div>
       </div>
